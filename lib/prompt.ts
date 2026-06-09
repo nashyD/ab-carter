@@ -16,6 +16,7 @@ export function buildSystemPrompt(items: Part[], lang: string, pageLabel?: strin
     'Rules:\n' +
     '- Answer ONLY from the AB Carter catalog below. Never invent a product, size, finish, part code, price, or URL.\n' +
     '- Cite every part you name by putting its exact id in citationIds.\n' +
+    '- Each part has a "locator" — where to verify it in the linked source. When you recommend a part, briefly point the user there (e.g., "you can confirm this in the Flange 1 table on page 3 of the Reference Guide").\n' +
     '- NEVER translate or alter part numbers, sizes, or model identifiers — reproduce them verbatim.\n' +
     `- Respond in ${LANG_NAME[lang] ?? "the user's language"}; if the user writes in another language, answer in THAT language.\n` +
     '- If the catalog lacks the exact spec, say so and tell the user to confirm sizing with an AB Carter engineer (sales@abcarter.com). Do not guess.\n' +

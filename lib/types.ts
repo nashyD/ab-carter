@@ -17,6 +17,8 @@ export interface Part {
   selectionLogic: string; // the rule that helps pick this part
   source: string; // AB Carter public source this came from
   confirmWithEngineer?: boolean; // true where public data is thin
+  locator?: string; // where to verify this part in the linked source (table/section)
+  sourcePage?: number; // PDF page number, for a deep link (source#page=N)
 }
 
 export interface Citation {
@@ -25,7 +27,8 @@ export interface Citation {
   title: string;
   detail: string; // one-line key spec shown on the card
   source: string;
-  url: string; // AB Carter source/category page
+  url: string; // AB Carter source/category page (deep-linked to the page when known)
+  locator?: string; // where to verify it in the source
 }
 
 export interface ChatMessage {

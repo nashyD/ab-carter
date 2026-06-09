@@ -35,7 +35,8 @@ function resolveCitations(ids: string[], items: Part[]): Citation[] {
           .filter(Boolean)
           .join(' · ') || p.selectionLogic,
       source: p.source,
-      url: p.source,
+      url: p.sourcePage ? `${p.source}#page=${p.sourcePage}` : p.source,
+      locator: p.locator,
     }));
 }
 

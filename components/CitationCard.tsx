@@ -26,7 +26,12 @@ export default function CitationCard({ citation }: { citation: Citation }) {
       <div className="min-w-0 flex-1 leading-tight">
         <div className="truncate text-sm font-semibold text-carter-900">{citation.title}</div>
         <div className="text-xs text-carter-700">{citation.detail}</div>
-        <div className="mt-0.5 text-xs text-carter-500">View on abcarter.com →</div>
+        {citation.locator && (
+          <div className="mt-0.5 text-xs text-carter-600">
+            <span className="font-medium">Verify:</span> {citation.locator}
+          </div>
+        )}
+        <div className="mt-0.5 text-xs text-carter-500">Open source →</div>
       </div>
     </a>
   );
