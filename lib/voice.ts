@@ -29,6 +29,15 @@ export function stopSpeaking(): void {
   if (voiceSupported()) window.speechSynthesis.cancel();
 }
 
+// Unlock speech on iOS/Safari, which only enables TTS after a user gesture.
+// Call this from the click handler that turns voice on.
+export function primeVoice(): void {
+  if (!voiceSupported()) return;
+  const u = new SpeechSynthesisUtterance(' ');
+  u.volume = 0;
+  window.speechSynthesis.speak(u);
+}
+
 // ---- Speech-to-text (optional; Chrome/Edge full, Safari partial) ----
 interface SpeechRecognitionEvent {
   results: ArrayLike<ArrayLike<{ transcript: string }>>;

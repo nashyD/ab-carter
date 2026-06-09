@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { ChatMessage, Lang } from '@/lib/types';
 import { I18N } from '@/lib/i18n';
 import { CATALOG } from '@/data/catalog';
-import { speak, stopSpeaking, listen, micSupported, voiceSupported } from '@/lib/voice';
+import { speak, stopSpeaking, primeVoice, listen, micSupported, voiceSupported } from '@/lib/voice';
 import BrowserFrame from '@/components/BrowserFrame';
 import ChatPanel from '@/components/ChatPanel';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -62,7 +62,9 @@ export default function Page() {
     setVoiceOn((v) => {
       const next = !v;
       localStorage.setItem(VOICE_KEY, next ? '1' : '0');
-      if (!next) {
+      if (next) {
+        primeVoice();
+      } else {
         stopSpeaking();
         setSpeaking(false);
       }
