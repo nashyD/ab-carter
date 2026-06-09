@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { ChatMessage, Lang } from '@/lib/types';
 import { I18N } from '@/lib/i18n';
 import { CATALOG } from '@/data/catalog';
-import { speak, stopSpeaking, primeVoice, listen, micSupported, voiceSupported } from '@/lib/voice';
+import { playVoice, stopSpeaking, primeVoice, listen, micSupported, voiceSupported } from '@/lib/voice';
 import BrowserFrame from '@/components/BrowserFrame';
 import ChatPanel from '@/components/ChatPanel';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -110,7 +110,7 @@ export default function Page() {
       const data = await res.json();
       setMessages([...next, { role: 'assistant', content: data.reply, citations: data.citations }]);
       if (voiceOn && typeof data.reply === 'string') {
-        speak(data.reply, lang, () => setSpeaking(true), () => setSpeaking(false));
+        playVoice(data.reply, lang, code, () => setSpeaking(true), () => setSpeaking(false));
       }
     } catch {
       setMessages([

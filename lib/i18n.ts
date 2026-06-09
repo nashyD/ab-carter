@@ -8,8 +8,8 @@ export interface UIStrings {
   chips: string[];
 }
 
-// Vetted starter questions per language so the live demo never misfires.
-// Each chip maps to a question the travelers/rings catalog can actually answer.
+// Vetted, specific starter questions per language — each maps to a part the catalog
+// answers crisply, so the live demo lands a sharp, cited recommendation every time.
 export const I18N: Record<Lang, UIStrings> = {
   en: {
     greeting:
@@ -18,9 +18,9 @@ export const I18N: Record<Lang, UIStrings> = {
     send: 'Send',
     thinking: 'Thinking…',
     chips: [
-      'Which traveler for fine cotton on a short-staple ring?',
-      'What wire profile suits heavy wool counts?',
-      'I need ~50% longer traveler life — what finish?',
+      'Spinning 40s compact cotton at high speed on a Flange 1 ring — which traveler and finish?',
+      'Which wire profile reduces yarn hairiness on 100% fine cotton?',
+      'Long-staple wool on an HZ-type ring — which traveler and size?',
     ],
   },
   es: {
@@ -30,9 +30,9 @@ export const I18N: Record<Lang, UIStrings> = {
     send: 'Enviar',
     thinking: 'Pensando…',
     chips: [
-      '¿Qué cursor para algodón fino en anillo de fibra corta?',
-      '¿Qué perfil de alambre para títulos de lana gruesa?',
-      'Necesito ~50% más vida del cursor, ¿qué acabado?',
+      'Hilando algodón compacto 40s a alta velocidad en anillo de brida 1, ¿qué cursor y acabado?',
+      '¿Qué perfil de alambre reduce la pelosidad del hilo en algodón 100% fino?',
+      'Lana de fibra larga en anillo tipo HZ, ¿qué cursor y qué tamaño?',
     ],
   },
   zh: {
@@ -40,6 +40,10 @@ export const I18N: Record<Lang, UIStrings> = {
     placeholder: '咨询钢丝圈、钢领、尺寸…',
     send: '发送',
     thinking: '思考中…',
-    chips: ['短纤维钢领纺细支棉纱用哪种钢丝圈？', '粗支毛纱适合哪种钢丝截面？', '需要钢丝圈寿命延长约50%，用什么表面处理？'],
+    chips: [
+      '在 Flange 1 钢领上高速纺 40 支紧密纺棉纱，应选哪种钢丝圈和表面处理？',
+      '哪种钢丝截面能降低 100% 细支棉纱的毛羽？',
+      'HZ 型钢领纺长纤维毛纱，应选哪种钢丝圈和尺寸？',
+    ],
   },
 };
