@@ -5,6 +5,18 @@ const TTS_PER_MIN = 30;
 const MODEL = process.env.ELEVENLABS_MODEL || 'eleven_turbo_v2_5';
 const VOICE_ID = process.env.ELEVENLABS_VOICE_ID || '21m00Tcm4TlvDq8ikWAM'; // "Rachel" (premade, multilingual)
 const LANGS = new Set(['en', 'es', 'zh']);
+const SPEED = Number(process.env.ELEVENLABS_SPEED) || 0.9; // 0.7–1.2; lower = slower & clearer
+
+// TTS mangles technical shorthand — read it aloud cleanly without changing the on-screen text.
+function normalizeForSpeech(text: string): string {
+  return text
+    .replace(/(\d[\d./]*)\s*[-–—]\s*(\d[\d./]*)/g, '$1 to $2') // "8/0 - 22/0" → "8/0 to 22/0"
+    .replace(/\bmm\b/gi, 'millimeters') // "11.1 mm" → "11.1 millimeters"
+    .replace(/\s+[—–]\s+/g, ', ') // dash asides → a comma pause (smoother delivery)
+    .replace(/\bw\/\b/gi, 'with')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0] ?? 'local';
@@ -49,9 +61,9 @@ export async function POST(req: NextRequest) {
         Accept: 'audio/mpeg',
       },
       body: JSON.stringify({
-        text,
+        text: normalizeForSpeech(text),
         model_id: MODEL,
-        voice_settings: { stability: 0.4, similarity_boost: 0.8 },
+        voice_settings: { stability: 0.55, similarity_boost: 0.75, speed: SPEED },
         ...(supportsLangCode ? { language_code: lang } : {}),
       }),
     });
