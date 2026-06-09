@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  --color-carter-50: #f4f6f8;
+  --color-carter-100: #e6ebf0;
+  --color-carter-200: #cdd7e0;
+  --color-carter-400: #5b7390;
+  --color-carter-500: #3a5273;
+  --color-carter-600: #233a5e; /* AB Carter navy */
+  --color-carter-700: #1a2c47;
+  --color-carter-900: #0f1b2d;
+  --color-accent: #b1232b; /* AB Carter red */
+  --color-surface: #ffffff;
+}
+
+body {
+  background: var(--color-carter-50);
+  color: var(--color-carter-900);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
