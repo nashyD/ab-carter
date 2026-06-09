@@ -20,7 +20,7 @@ export const I18N: Record<Lang, UIStrings> = {
     chips: [
       'Spinning 40s compact cotton at high speed on a Flange 1 ring — which traveler and finish?',
       'Which wire profile reduces yarn hairiness on 100% fine cotton?',
-      'Long-staple wool on an HZ-type ring — which traveler and size?',
+      'Fine long-staple wool on an 11.1 mm HZ ring — which traveler profile and finish?',
     ],
   },
   es: {
@@ -32,7 +32,7 @@ export const I18N: Record<Lang, UIStrings> = {
     chips: [
       'Hilando algodón compacto 40s a alta velocidad en anillo de brida 1, ¿qué cursor y acabado?',
       '¿Qué perfil de alambre reduce la pelosidad del hilo en algodón 100% fino?',
-      'Lana de fibra larga en anillo tipo HZ, ¿qué cursor y qué tamaño?',
+      'Lana fina de fibra larga en anillo HZ de 11.1 mm, ¿qué perfil de cursor y acabado?',
     ],
   },
   zh: {
@@ -43,7 +43,7 @@ export const I18N: Record<Lang, UIStrings> = {
     chips: [
       '在 Flange 1 钢领上高速纺 40 支紧密纺棉纱，应选哪种钢丝圈和表面处理？',
       '哪种钢丝截面能降低 100% 细支棉纱的毛羽？',
-      'HZ 型钢领纺长纤维毛纱，应选哪种钢丝圈和尺寸？',
+      '11.1 mm HZ 型钢领纺细支长纤维毛纱，应选哪种钢丝圈截面和表面处理？',
     ],
   },
 };
