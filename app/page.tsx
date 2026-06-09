@@ -5,14 +5,17 @@ import { I18N } from '@/lib/i18n';
 import BrowserFrame from '@/components/BrowserFrame';
 import ChatPanel from '@/components/ChatPanel';
 import LanguageToggle from '@/components/LanguageToggle';
+import Avatar from '@/components/Avatar';
 
 const GATED = process.env.NEXT_PUBLIC_GATED === '1';
 const CODE_KEY = 'abc_access';
+const AVATAR_KEY = 'abc_avatar';
 
 export default function Page() {
   const [lang, setLang] = useState<Lang>('en');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [busy, setBusy] = useState(false);
+  const [avatarOn, setAvatarOn] = useState(false);
 
   // Access gate (only active when NEXT_PUBLIC_GATED=1)
   const [ready, setReady] = useState(false);
@@ -21,7 +24,10 @@ export default function Page() {
   const [gateError, setGateError] = useState(false);
 
   useEffect(() => {
-    setCode(typeof window !== 'undefined' ? localStorage.getItem(CODE_KEY) || '' : '');
+    if (typeof window !== 'undefined') {
+      setCode(localStorage.getItem(CODE_KEY) || '');
+      setAvatarOn(localStorage.getItem(AVATAR_KEY) === '1');
+    }
     setReady(true);
   }, []);
 
@@ -33,6 +39,14 @@ export default function Page() {
     localStorage.setItem(CODE_KEY, c);
     setCode(c);
     setGateError(false);
+  }
+
+  function toggleAvatar() {
+    setAvatarOn((v) => {
+      const next = !v;
+      localStorage.setItem(AVATAR_KEY, next ? '1' : '0');
+      return next;
+    });
   }
 
   async function onSend(text: string) {
@@ -100,20 +114,44 @@ export default function Page() {
   }
 
   const hero = messages.length === 0;
+  const avatarState = busy ? 'thinking' : 'idle';
+
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-2xl flex-col justify-center gap-4 px-4 py-10">
       <div className="flex items-center justify-between">
         <span className="text-sm font-semibold tracking-wide text-carter-700">A. B. CARTER</span>
-        <LanguageToggle
-          lang={lang}
-          onChange={(l) => {
-            setLang(l);
-            setMessages([]);
-          }}
-        />
+        <div className="flex items-center gap-2">
+          <button
+            onClick={toggleAvatar}
+            title="Show or hide the assistant character"
+            aria-pressed={avatarOn}
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition ${
+              avatarOn ? 'bg-carter-600 text-white' : 'bg-carter-100 text-carter-700 hover:bg-carter-200'
+            }`}
+          >
+            <svg width="11" height="12" viewBox="0 0 22 24" fill="none" aria-hidden="true">
+              <ellipse cx="11" cy="5" rx="9" ry="3" fill="currentColor" />
+              <ellipse cx="11" cy="19" rx="9" ry="3" fill="currentColor" />
+              <rect x="4" y="5" width="14" height="14" fill="currentColor" opacity="0.55" />
+            </svg>
+            Character
+          </button>
+          <LanguageToggle
+            lang={lang}
+            onChange={(l) => {
+              setLang(l);
+              setMessages([]);
+            }}
+          />
+        </div>
       </div>
       <BrowserFrame url="abcarter.com">
         <div className="flex flex-col gap-4 p-6">
+          {avatarOn && (
+            <div className="flex justify-center">
+              <Avatar state={avatarState} size={hero ? 128 : 76} />
+            </div>
+          )}
           {hero && <p className="text-center text-sm text-carter-700">{t.greeting}</p>}
           <ChatPanel
             messages={messages}

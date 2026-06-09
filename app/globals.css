@@ -18,3 +18,24 @@ body {
   color: var(--color-carter-900);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
+
+/* Optional assistant character (toggle) */
+@keyframes carter-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes carter-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.045); }
+}
+@keyframes carter-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.1); }
+}
+.carter-idle { animation: carter-bob 3.6s ease-in-out infinite; }
+.carter-thinking { animation: carter-pulse 1.1s ease-in-out infinite; }
+.carter-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: carter-blink 5.5s infinite;
+}
