@@ -52,7 +52,7 @@ export async function ask(
 
   const res = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: 700,
+    max_tokens: 1500,
     system: [
       {
         type: 'text',
@@ -69,6 +69,12 @@ export async function ask(
   if (!toolUse || toolUse.type !== 'tool_use') {
     throw new Error('Claude did not return a structured response');
   }
-  const { reply, citationIds } = toolUse.input as { reply: string; citationIds: string[] };
+  // Claude can omit fields even on a forced/required tool call, so parse defensively.
+  const input = (toolUse.input ?? {}) as { reply?: string; citationIds?: string[] };
+  const citationIds = Array.isArray(input.citationIds) ? input.citationIds : [];
+  const reply =
+    typeof input.reply === 'string' && input.reply.trim().length > 0
+      ? input.reply
+      : 'I want to get this right — please confirm the exact part with an AB Carter engineer at sales@abcarter.com.';
   return { reply, citations: resolveCitations(citationIds, items) };
 }
