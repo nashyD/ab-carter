@@ -13,6 +13,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'cap' }, { status: 429 });
   }
 
+  // Access gate: when DEMO_PASSWORD is set (deployed demo), require a matching code.
+  // Unset locally → open for development. Protects the API key behind the endpoint.
+  const accessCode = req.headers.get('x-access-code') ?? '';
+  const requiredCode = process.env.DEMO_PASSWORD;
+  if (requiredCode && accessCode !== requiredCode) {
+    return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  }
+
   try {
     const body = await req.json();
     const lang: Lang = VALID_LANGS.has(body?.lang) ? body.lang : 'en';
