@@ -3,7 +3,14 @@ import { rateLimit } from '@/lib/ratelimit';
 
 const TTS_PER_MIN = 30;
 const MODEL = process.env.ELEVENLABS_MODEL || 'eleven_turbo_v2_5';
-const VOICE_ID = process.env.ELEVENLABS_VOICE_ID || '21m00Tcm4TlvDq8ikWAM'; // "Rachel" (premade, multilingual)
+const VOICE_ID = process.env.ELEVENLABS_VOICE_ID || '21m00Tcm4TlvDq8ikWAM'; // default / English
+
+// A native voice per language (English keeps the default voice).
+function voiceForLang(lang: string): string {
+  if (lang === 'es') return process.env.ELEVENLABS_VOICE_ID_ES || VOICE_ID;
+  if (lang === 'zh') return process.env.ELEVENLABS_VOICE_ID_ZH || VOICE_ID;
+  return VOICE_ID;
+}
 const LANGS = new Set(['en', 'es', 'zh']);
 const SPEED = Number(process.env.ELEVENLABS_SPEED) || 0.9; // 0.7–1.2; lower = slower & clearer
 
@@ -53,7 +60,7 @@ export async function POST(req: NextRequest) {
   const supportsLangCode = /turbo_v2_5|flash_v2_5/.test(MODEL);
 
   try {
-    const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`, {
+    const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceForLang(lang)}`, {
       method: 'POST',
       headers: {
         'xi-api-key': key,
