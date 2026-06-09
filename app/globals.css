@@ -39,3 +39,18 @@ body {
   transform-origin: center;
   animation: carter-blink 5.5s infinite;
 }
+.carter-talking { animation: carter-bob 3.6s ease-in-out infinite; }
+@keyframes carter-flap {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+.carter-mouth-open {
+  display: none;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.carter-talking .carter-mouth-open {
+  display: block;
+  animation: carter-flap 0.28s ease-in-out infinite;
+}
+.carter-talking .carter-mouth-smile { display: none; }

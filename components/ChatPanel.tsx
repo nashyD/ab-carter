@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { ChatMessage } from '@/lib/types';
 import MessageBubble from './MessageBubble';
 
@@ -11,6 +11,9 @@ export default function ChatPanel({
   placeholder,
   sendLabel,
   thinkingLabel,
+  tools,
+  speaking,
+  onStop,
 }: {
   messages: ChatMessage[];
   busy: boolean;
@@ -19,6 +22,9 @@ export default function ChatPanel({
   placeholder: string;
   sendLabel: string;
   thinkingLabel: string;
+  tools?: ReactNode;
+  speaking?: boolean;
+  onStop?: () => void;
 }) {
   const [text, setText] = useState('');
   const endRef = useRef<HTMLDivElement>(null);
@@ -61,7 +67,20 @@ export default function ChatPanel({
         <div ref={endRef} />
       </div>
 
+      {speaking && onStop && (
+        <button
+          onClick={onStop}
+          className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-carter-100 px-3 py-1 text-xs font-medium text-carter-700 transition hover:bg-carter-200"
+        >
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <rect x="5" y="5" width="14" height="14" rx="2.5" />
+          </svg>
+          Stop speaking
+        </button>
+      )}
+
       <div className="flex items-center gap-2">
+        {tools}
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}

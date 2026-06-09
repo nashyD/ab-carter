@@ -1,4 +1,4 @@
-type AvatarState = 'idle' | 'thinking';
+type AvatarState = 'idle' | 'thinking' | 'talking';
 
 // Optional assistant mascot — a thread spool/bobbin, a nod to AB Carter's line.
 // Off by default; toggled on from the header when the room wants a friendlier face.
@@ -34,8 +34,16 @@ export default function Avatar({ state, size = 128 }: { state: AvatarState; size
       <ellipse className="carter-eye" cx="114" cy="106" rx="6.5" ry="8.5" fill="#1a2c47" />
       <circle cx="88.3" cy="102.6" r="2.3" fill="#fff" />
       <circle cx="116.3" cy="102.6" r="2.3" fill="#fff" />
-      {/* smile */}
-      <path d="M88 121 Q100 131 112 121" stroke="#1a2c47" strokeWidth="4" fill="none" strokeLinecap="round" />
+      {/* mouth — smile when idle, flaps open when talking */}
+      <path
+        className="carter-mouth-smile"
+        d="M88 121 Q100 131 112 121"
+        stroke="#1a2c47"
+        strokeWidth="4"
+        fill="none"
+        strokeLinecap="round"
+      />
+      <ellipse className="carter-mouth-open" cx="100" cy="124" rx="8" ry="6" fill="#1a2c47" />
     </svg>
   );
 }
